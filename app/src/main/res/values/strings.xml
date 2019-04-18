@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Not\'Now</string>
+    <string name="date_default">01-01-2019</string>
+    <string name="note_text_default">Texte de la note</string>
+</resources>
