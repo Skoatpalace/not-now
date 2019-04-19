@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.example.notnow">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.notnow">
 
     <application
             android:allowBackup="true"
@@ -8,23 +9,28 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_logo_principal_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".NoteDetailActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:parentActivityName=".NoteListActivity">
-
-            <meta-data
-                android:name="android.support.PARENT_Activity"
-                android:value=".NoteListActivity"/>
-        </activity>
-        <activity android:name=".NoteListActivity">
+                android:name=".SplashActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+                android:name=".NoteDetailActivity"
+                android:parentActivityName=".NoteListActivity"
+                android:windowSoftInputMode="adjustResize">
+            <meta-data
+                    android:name="android.support.PARENT_Activity"
+                    android:value=".NoteListActivity"/>
+        </activity>
+        <activity android:name=".NoteListActivity"/>
+
     </application>
 
 </manifest>

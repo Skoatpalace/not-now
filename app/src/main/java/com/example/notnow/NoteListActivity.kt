@@ -1,12 +1,18 @@
 package com.example.notnow
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.example.notnow.utils.deleteNote
+import com.example.notnow.utils.loadNotes
+import com.example.notnow.utils.persistNote
 
 class NoteListActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -20,11 +26,12 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        notes = mutableListOf<Note>()
-        notes.add(Note("Blablabla"))
-        notes.add(Note("grand joueur de basket"))
-        notes.add(Note("Future championne de la NBA"))
-        notes.add(Note("Parce-que Java !"))
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener(this)
+
+
+
+        notes = loadNotes(this)
 
         adapter = NoteAdapter(notes, this)
 
@@ -33,18 +40,70 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener {
         recyclerView.adapter = adapter
     }
 
-    override fun onClick(view: View) {
-        if(view.tag != null){
-            showNoteDetail(view.tag as Int)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_OK || data == null) {
+            return
+        }
+        when (requestCode) {
+            NoteDetailActivity.REQUEST_EDIT_NOTE -> processEditNoteResult(data)
         }
     }
 
-    fun showNoteDetail(noteIndex: Int){
-        val note = notes[noteIndex]
+    private fun processEditNoteResult(data: Intent) {
+        val noteIndex = data.getIntExtra(NoteDetailActivity.EXTRA_NOTE_INDEX, -1)
+
+        when (data.action) {
+            NoteDetailActivity.ACTION_SAVE_NOTE -> {
+                val note = data.getParcelableExtra<Note>(NoteDetailActivity.EXTRA_NOTE)
+                saveNote(note, noteIndex)
+            }
+            NoteDetailActivity.ACTION_DELETE_NOTE -> {
+                deleteNote(noteIndex)
+            }
+        }
+
+    }
+
+    override fun onClick(view: View) {
+        if (view.tag != null) {
+            showNoteDetail(view.tag as Int)
+        } else {
+            when (view.id) {
+                R.id.fab -> createNewNote()
+            }
+        }
+    }
+
+    fun saveNote(note: Note, noteIndex: Int) {
+        persistNote(this, note)
+        if (noteIndex < 0) {
+            notes.add(0, note)
+        } else {
+            notes[noteIndex] = note
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun deleteNote(noteIndex: Int) {
+        if (noteIndex < 0) {
+            return
+        }
+        val note = notes.removeAt(noteIndex)
+        deleteNote(this, note)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun createNewNote() {
+
+        showNoteDetail(-1)
+    }
+
+    fun showNoteDetail(noteIndex: Int) {
+        val note = if (noteIndex < 0) Note() else notes[noteIndex]
 
         val intent = Intent(this, NoteDetailActivity::class.java)
-        intent.putExtra(NoteDetailActivity.EXTRA_NOTE, note)
+        intent.putExtra(NoteDetailActivity.EXTRA_NOTE, note as Parcelable)
         intent.putExtra(NoteDetailActivity.EXTRA_NOTE_INDEX, noteIndex)
-        startActivity(intent)
+        startActivityForResult(intent, NoteDetailActivity.REQUEST_EDIT_NOTE)
     }
 }
