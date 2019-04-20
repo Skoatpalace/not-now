@@ -29,8 +29,6 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener {
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener(this)
 
-
-
         notes = loadNotes(this)
 
         adapter = NoteAdapter(notes, this)

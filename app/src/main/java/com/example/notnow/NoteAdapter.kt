@@ -13,8 +13,8 @@ class NoteAdapter(val notes: List<Note>, val itemClickListener: View.OnClickList
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val cardView = itemView.findViewById<CardView>(R.id.card_view)
         val dateView = cardView.findViewById<TextView>(R.id.titleDate)
+        val titleView = cardView.findViewById<TextView>(R.id.titleView)
         val excerptView = cardView.findViewById<TextView>(R.id.excerpt)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +28,7 @@ class NoteAdapter(val notes: List<Note>, val itemClickListener: View.OnClickList
         holder.cardView.setOnClickListener(itemClickListener)
         holder.cardView.tag = position
         holder.dateView.text = note.date
+        holder.titleView.text = note.title
         holder.excerptView.text = note.text
     }
 

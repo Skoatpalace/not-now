@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_note_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +29,7 @@ class NoteDetailActivity : AppCompatActivity() {
     var noteIndex: Int = -1
 
     lateinit var dateView: TextView
+    lateinit var titleView: TextView
     lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,16 +43,18 @@ class NoteDetailActivity : AppCompatActivity() {
 
         note = intent.getParcelableExtra<Note>(EXTRA_NOTE)
         noteIndex = intent.getIntExtra(EXTRA_NOTE_INDEX, -1)
-
+        textDetail.requestFocus()
         dateView = findViewById(R.id.dateDetail)
+        titleView = findViewById(R.id.titleDetail)
         textView = findViewById(R.id.textDetail)
 
         dateView.text = note.date
+        titleView.text = note.title
         textView.text = note.text
 
         val cal = Calendar.getInstance()
 
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        val dateSetListener = DatePickerDialog.OnDateSetListener {view, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -109,6 +113,7 @@ class NoteDetailActivity : AppCompatActivity() {
 
     fun saveNote(){
         note.date = dateView.text.toString()
+        note.title = titleView.text.toString()
         note.text = textView.text.toString()
 
         intent = Intent(ACTION_SAVE_NOTE)

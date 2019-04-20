@@ -9,10 +9,12 @@ import java.io.Serializable
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 data class Note(var text: String = "",
+                var title: String = "",
                 var date: String = Dates.today.toString("dd-MM-yyyy"),
                 var filename: String = "") : Parcelable, Serializable {
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -20,6 +22,7 @@ data class Note(var text: String = "",
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(text)
+        parcel.writeString(title)
         parcel.writeString(date)
         parcel.writeString(filename)
     }

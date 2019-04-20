@@ -5,32 +5,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NoteDetailActivity">
+    tools:context=".NoteDetailActivity"
+    android:windowSoftInputMode ="stateHidden"
+    >
 
     <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/greyBack"
-            android:minHeight="56dp"
-            app:logo="@drawable/logo_complet"/>
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/greyBack"
+        android:minHeight="56dp"
+        app:logo="@drawable/logo_complet"
+        />
 
     <EditText
         android:id="@+id/dateDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:inputType="date"
-        style="@style/NoteDateFont"
+        android:inputType="datetime"
+        android:textStyle="italic"
         android:hint="@string/date_default"
+        android:importantForAutofill="no" tools:ignore="UnusedAttribute"
+        android:windowSoftInputMode ="stateAlwaysHidden"/>
+    <EditText
+        android:id="@+id/titleDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateDetail"
+        android:inputType="text"
+        style="@style/NoteDateFont"
+        android:hint="@string/titre_de_la_note"
         android:importantForAutofill="no" tools:ignore="UnusedAttribute"/>
 
     <EditText
         android:id="@+id/textDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inputType="text"
-        android:layout_below="@+id/dateDetail"
+        android:inputType="text|textMultiLine"
+        android:layout_below="@+id/titleDetail"
         android:hint="@string/note_text_default"
         android:importantForAutofill="no" tools:ignore="UnusedAttribute"/>
 
