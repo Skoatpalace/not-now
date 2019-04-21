@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/widget_margin"
+                android:orientation="vertical"
+                android:background="@color/greyBack">
+
+    <ImageView
+            android:id="@+id/logoWidget"
+            android:layout_width="match_parent"
+            android:layout_height="178dp"
+            android:src="@drawable/logo_aside"
+            android:scaleType="centerInside"
+    />
+
+    <Button
+            android:id="@+id/button_new_note"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center|bottom"
+            android:text="@string/creer_note"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"/>
+
+</LinearLayout>

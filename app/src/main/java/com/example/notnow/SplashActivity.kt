@@ -1,6 +1,7 @@
 package com.example.notnow
 
 import android.animation.Animator
+import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -28,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
             splashLogo.scaleX = value
             splashLogo.scaleY = value
         }
-        valueAnimator.interpolator = BounceInterpolator()
+        valueAnimator.interpolator = BounceInterpolator() as TimeInterpolator?
         valueAnimator.duration = ANIMATION_DURATION
 
         // Set animator listener.

@@ -5,4 +5,7 @@
     <string name="save">Enregistrer</string>
     <string name="supprimer">supprimer</string>
     <string name="titre_de_la_note">Titre de la note</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="creer_note">Créer une nouvelle note</string>
 </resources>
