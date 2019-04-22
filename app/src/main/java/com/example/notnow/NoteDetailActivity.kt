@@ -20,9 +20,9 @@ class NoteDetailActivity : AppCompatActivity() {
         val REQUEST_EDIT_NOTE = 1
         val EXTRA_NOTE = "note"
         val EXTRA_NOTE_INDEX = "noteIndex"
-
         val ACTION_SAVE_NOTE = "com.example.notnow.actions.ACTION_SAVE_NOTE"
         val ACTION_DELETE_NOTE = "com.example.notnow.actions.ACTION_DELETE_NOTE"
+
     }
 
     lateinit var note: Note
@@ -41,6 +41,7 @@ class NoteDetailActivity : AppCompatActivity() {
         toolbar.setLogo(R.drawable.logo_complet)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+
         note = intent.getParcelableExtra<Note>(EXTRA_NOTE)
         noteIndex = intent.getIntExtra(EXTRA_NOTE_INDEX, -1)
         textDetail.requestFocus()
@@ -54,7 +55,7 @@ class NoteDetailActivity : AppCompatActivity() {
 
         val cal = Calendar.getInstance()
 
-        val dateSetListener = DatePickerDialog.OnDateSetListener {view, year, monthOfYear, dayOfMonth ->
+        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -100,7 +101,7 @@ class NoteDetailActivity : AppCompatActivity() {
 
     private fun showConfirmDeleteNoteDialog() {
         val confirmFragment = ConfirmDeleteNoteDialogFragment(note.date)
-        confirmFragment.listener = object: ConfirmDeleteNoteDialogFragment.ConfirmeDeleteDialogListener{
+        confirmFragment.listener = object : ConfirmDeleteNoteDialogFragment.ConfirmeDeleteDialogListener {
             override fun onDialogPositiveClick() {
                 deleteNote()
             }
@@ -111,7 +112,7 @@ class NoteDetailActivity : AppCompatActivity() {
         confirmFragment.show(supportFragmentManager, "confirmDeleteDialog")
     }
 
-    fun saveNote(){
+    fun saveNote() {
         note.date = dateView.text.toString()
         note.title = titleView.text.toString()
         note.text = textView.text.toString()
@@ -123,7 +124,7 @@ class NoteDetailActivity : AppCompatActivity() {
         finish()
     }
 
-    fun deleteNote(){
+    fun deleteNote() {
         intent = Intent(ACTION_DELETE_NOTE)
         intent.putExtra(EXTRA_NOTE_INDEX, noteIndex)
         setResult(Activity.RESULT_OK, intent)

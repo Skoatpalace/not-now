@@ -7,23 +7,23 @@ import android.os.Parcelable
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.support.design.widget.Snackbar.LENGTH_LONG
 import android.support.design.widget.Snackbar.LENGTH_SHORT
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.Toast
 import com.example.notnow.utils.deleteNote
 import com.example.notnow.utils.loadNotes
 import com.example.notnow.utils.persistNote
+
 
 class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
 
     lateinit var notes: MutableList<Note>
     lateinit var adapter: NoteAdapter
     lateinit var coordinatorLayout: CoordinatorLayout
+    val ACTION_NEW_NOTE = "com.example.notnow.action.ACTION_NEW_NOTE"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +37,10 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
 
         notes = loadNotes(this)
         adapter = NoteAdapter(notes, this, this)
+
+        if (intent.getStringExtra("com.example.notnow.action.ACTION_NEW_NOTE") == ACTION_NEW_NOTE){
+            createNewNote()
+        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.notes_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -98,7 +102,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
     private fun showConfirmDeleteNoteDialog(noteIndex: Int) {
         val note: Note = notes[noteIndex]
         val confirmFragment = ConfirmDeleteNoteDialogFragment(note.date)
-        confirmFragment.listener = object: ConfirmDeleteNoteDialogFragment.ConfirmeDeleteDialogListener{
+        confirmFragment.listener = object : ConfirmDeleteNoteDialogFragment.ConfirmeDeleteDialogListener {
             override fun onDialogPositiveClick() {
                 deleteNote(noteIndex)
             }
@@ -117,12 +121,14 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
         deleteNote(this, note)
         adapter.notifyDataSetChanged()
 
-        Snackbar.make(coordinatorLayout,
+        Snackbar.make(
+            coordinatorLayout,
             if (note.title.isEmpty()) {
                 "la note du ${note.date} a été supprimée"
-            }else{
+            } else {
                 "${note.title} a été supprimée"
-            }, LENGTH_SHORT).show()
+            }, LENGTH_SHORT
+        ).show()
     }
 
     fun createNewNote() {
