@@ -1,4 +1,4 @@
-package com.example.notnow
+package com.skoatpalace.notnow
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

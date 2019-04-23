@@ -1,4 +1,4 @@
-package com.example.notnow
+package com.skoatpalace.notnow
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.example.notnow
+package com.skoatpalace.notnow
 
 import android.app.Activity
 import android.content.Intent
@@ -13,9 +13,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
-import com.example.notnow.utils.deleteNote
-import com.example.notnow.utils.loadNotes
-import com.example.notnow.utils.persistNote
+import com.skoatpalace.notnow.utils.deleteNote
+import com.skoatpalace.notnow.utils.loadNotes
+import com.skoatpalace.notnow.utils.persistNote
 
 
 class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
@@ -23,7 +23,6 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
     lateinit var notes: MutableList<Note>
     lateinit var adapter: NoteAdapter
     lateinit var coordinatorLayout: CoordinatorLayout
-    val ACTION_NEW_NOTE = "com.example.notnow.action.ACTION_NEW_NOTE"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +37,15 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
         notes = loadNotes(this)
         adapter = NoteAdapter(notes, this, this)
 
-        if (intent.getStringExtra("com.example.notnow.action.ACTION_NEW_NOTE") == ACTION_NEW_NOTE){
-            createNewNote()
-        }
-
         val recyclerView = findViewById<RecyclerView>(R.id.notes_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         coordinatorLayout = findViewById(R.id.coordinator_layout)
+
+        if (intent.action == NoteAppWidget.ACTION_NEW_NOTE){
+            createNewNote()
+        }else{return}
 
     }
 
@@ -131,12 +130,12 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
         ).show()
     }
 
-    fun createNewNote() {
+    private fun createNewNote() {
 
         showNoteDetail(-1)
     }
 
-    fun showNoteDetail(noteIndex: Int) {
+    private fun showNoteDetail(noteIndex: Int) {
         val note = if (noteIndex < 0) Note() else notes[noteIndex]
 
         val intent = Intent(this, NoteDetailActivity::class.java)

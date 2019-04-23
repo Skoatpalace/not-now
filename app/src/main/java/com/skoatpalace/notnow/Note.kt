@@ -1,4 +1,4 @@
-package com.example.notnow
+package com.skoatpalace.notnow
 
 import android.os.Parcel
 import android.os.Parcelable

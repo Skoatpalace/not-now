@@ -1,4 +1,4 @@
-package com.example.notnow
+package com.skoatpalace.notnow
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog

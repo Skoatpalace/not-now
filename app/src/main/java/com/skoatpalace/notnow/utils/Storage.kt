@@ -1,9 +1,9 @@
-package com.example.notnow.utils
+package com.skoatpalace.notnow.utils
 
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
-import com.example.notnow.Note
+import com.skoatpalace.notnow.Note
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.util.*

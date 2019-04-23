@@ -1,4 +1,4 @@
-package com.example.notnow
+package com.skoatpalace.notnow
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -20,8 +20,8 @@ class NoteDetailActivity : AppCompatActivity() {
         val REQUEST_EDIT_NOTE = 1
         val EXTRA_NOTE = "note"
         val EXTRA_NOTE_INDEX = "noteIndex"
-        val ACTION_SAVE_NOTE = "com.example.notnow.actions.ACTION_SAVE_NOTE"
-        val ACTION_DELETE_NOTE = "com.example.notnow.actions.ACTION_DELETE_NOTE"
+        val ACTION_SAVE_NOTE = "com.skoatpalace.notnow.actions.ACTION_SAVE_NOTE"
+        val ACTION_DELETE_NOTE = "com.skoatpalace.notnow.actions.ACTION_DELETE_NOTE"
 
     }
 
@@ -42,7 +42,7 @@ class NoteDetailActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
 
-        note = intent.getParcelableExtra<Note>(EXTRA_NOTE)
+                                                                                                                                                                                                                                                                                                                                                                 note = intent.getParcelableExtra<Note>(EXTRA_NOTE)
         noteIndex = intent.getIntExtra(EXTRA_NOTE_INDEX, -1)
         textDetail.requestFocus()
         dateView = findViewById(R.id.dateDetail)
@@ -116,12 +116,12 @@ class NoteDetailActivity : AppCompatActivity() {
         note.date = dateView.text.toString()
         note.title = titleView.text.toString()
         note.text = textView.text.toString()
-
         intent = Intent(ACTION_SAVE_NOTE)
         intent.putExtra(EXTRA_NOTE, note as Parcelable)
         intent.putExtra(EXTRA_NOTE_INDEX, noteIndex)
         setResult(Activity.RESULT_OK, intent)
         finish()
+
     }
 
     fun deleteNote() {
@@ -131,3 +131,4 @@ class NoteDetailActivity : AppCompatActivity() {
         finish()
     }
 }
+
